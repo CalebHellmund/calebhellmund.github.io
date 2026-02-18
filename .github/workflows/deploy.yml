@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: Deploy Astro site
 
 on:
   push:
@@ -10,74 +10,26 @@ permissions:
   pages: write
   id-token: write
 
-concurrency:
-  group: pages
-  cancel-in-progress: false
-
 jobs:
-  build:
-    name: Build
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Node
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
 
-      - name: Setup Pages
-        id: pages
-        uses: actions/configure-pages@v4
-
       - name: Install dependencies
         run: npm ci
 
-      - name: Build with Astro
+      - name: Build Astro site
         run: npm run build
-        env:
-          PUBLIC_SITE_URL: ${{ steps.pages.outputs.base_url }}
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./dist
-
-  deploy:
-    name: Deploy
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
       - name: Deploy to GitHub Pages
-        id: deployment
         uses: actions/deploy-pages@v4
-```
-
-FILE: .gitignore
-```
-# Build output
-dist/
-.astro/
-
-# Dependencies
-node_modules/
-
-# Environment
-.env
-.env.*
-!.env.example
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Editor
-.vscode/
-.idea/
-*.swp
-*.swo
+        with:
+          branch: github-pages
+          folder: dist
