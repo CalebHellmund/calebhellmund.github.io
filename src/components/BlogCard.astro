@@ -1,0 +1,51 @@
+---
+import TagPill from './TagPill.astro';
+import { formatDate, readingTime } from '@/utils/helpers';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+}
+
+const { post } = Astro.props;
+const { title, description, date, tags, image, imageAlt } = post.data;
+const rt = readingTime(post.body);
+---
+
+<article class="group bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden hover:border-accent-400 dark:hover:border-accent-500 hover:shadow-lg dark:hover:shadow-accent-900/20 transition-all duration-300">
+  {image && (
+    <div class="aspect-video overflow-hidden bg-gray-100 dark:bg-gray-800">
+      <img
+        src={image}
+        alt={imageAlt ?? title}
+        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+        loading="lazy"
+      />
+    </div>
+  )}
+  {!image && (
+    <div class="aspect-video bg-gradient-to-br from-gray-700 to-gray-900 dark:from-gray-800 dark:to-gray-950 flex items-center justify-center">
+      <svg class="h-10 w-10 text-white/30" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+      </svg>
+    </div>
+  )}
+
+  <div class="p-6">
+    <div class="flex items-center gap-3 text-xs text-gray-500 dark:text-gray-400 mb-3">
+      <time datetime={date.toISOString()}>{formatDate(date)}</time>
+      <span>·</span>
+      <span>{rt} min read</span>
+    </div>
+
+    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-accent-600 dark:group-hover:text-accent-400 transition-colors line-clamp-2">
+      <a href={`/blog/${post.slug}`}>{title}</a>
+    </h3>
+
+    <p class="text-sm text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">{description}</p>
+
+    <div class="flex flex-wrap gap-2">
+      {tags.slice(0, 4).map((tag) => <TagPill label={tag} href={`/blog?tag=${encodeURIComponent(tag)}`} small />)}
+    </div>
+  </div>
+</article>

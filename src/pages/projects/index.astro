@@ -1,0 +1,79 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ProjectCard from '@/components/ProjectCard.astro';
+import TagPill from '@/components/TagPill.astro';
+import { projects } from '@/data/projects';
+
+// Collect all unique tags
+const allTags = [...new Set(projects.flatMap((p) => p.tags))].sort();
+---
+
+<BaseLayout title="Projects" description="A collection of software projects — from AI/ML systems to developer tools and creative coding experiments.">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
+    <div class="mb-12">
+      <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">Projects</h1>
+      <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl">
+        A collection of things I've built — from production-grade systems to weekend experiments.
+        Each one taught me something new.
+      </p>
+    </div>
+
+    <!-- Tag filter -->
+    <div id="tag-filter" class="flex flex-wrap gap-2 mb-10">
+      <button data-tag="all"
+              class="tag-btn inline-flex items-center px-4 py-1.5 rounded-full text-sm font-medium transition-colors bg-accent-600 text-white">
+        All
+      </button>
+      {allTags.map((tag) => (
+        <button data-tag={tag}
+                class="tag-btn inline-flex items-center px-4 py-1.5 rounded-full text-sm font-medium transition-colors bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-accent-100 dark:hover:bg-accent-900/40">
+          {tag}
+        </button>
+      ))}
+    </div>
+
+    <!-- Projects grid -->
+    <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {projects.map((project) => (
+        <div class="project-item" data-tags={JSON.stringify(project.tags)}>
+          <ProjectCard project={project} />
+        </div>
+      ))}
+    </div>
+
+    <!-- Empty state -->
+    <div id="no-results" class="hidden text-center py-20 text-gray-500 dark:text-gray-400">
+      No projects match that filter.
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>('.tag-btn');
+  const items = document.querySelectorAll<HTMLDivElement>('.project-item');
+  const noResults = document.getElementById('no-results')!;
+
+  let activeTag = 'all';
+
+  function filterProjects(tag: string) {
+    activeTag = tag;
+    let visible = 0;
+    items.forEach((item) => {
+      const tags: string[] = JSON.parse(item.dataset.tags ?? '[]');
+      const show = tag === 'all' || tags.includes(tag);
+      item.classList.toggle('hidden', !show);
+      if (show) visible++;
+    });
+    noResults.classList.toggle('hidden', visible > 0);
+    buttons.forEach((btn) => {
+      const isActive = btn.dataset.tag === tag;
+      btn.className = isActive
+        ? 'tag-btn inline-flex items-center px-4 py-1.5 rounded-full text-sm font-medium transition-colors bg-accent-600 text-white'
+        : 'tag-btn inline-flex items-center px-4 py-1.5 rounded-full text-sm font-medium transition-colors bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-accent-100 dark:hover:bg-accent-900/40';
+    });
+  }
+
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', () => filterProjects(btn.dataset.tag ?? 'all'));
+  });
+</script>

@@ -1,0 +1,24 @@
+---
+interface Props {
+  label: string;
+  href?: string;
+  active?: boolean;
+  small?: boolean;
+}
+
+const { label, href, active = false, small = false } = Astro.props;
+
+const baseClass = [
+  'inline-flex items-center rounded-full font-medium transition-colors',
+  small ? 'text-xs px-2 py-0.5' : 'text-sm px-3 py-1',
+  active
+    ? 'bg-accent-600 text-white dark:bg-accent-500'
+    : 'bg-accent-50 text-accent-700 dark:bg-accent-900/40 dark:text-accent-300 hover:bg-accent-100 dark:hover:bg-accent-900/60',
+].join(' ');
+---
+
+{href ? (
+  <a href={href} class={baseClass}>{label}</a>
+) : (
+  <span class={baseClass}>{label}</span>
+)}

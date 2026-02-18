@@ -1,0 +1,129 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import BlogCard from '@/components/BlogCard.astro';
+import SearchBar from '@/components/SearchBar.astro';
+import TagPill from '@/components/TagPill.astro';
+import { getCollection } from 'astro:content';
+import { readingTime, formatDate } from '@/utils/helpers';
+
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+const sortedPosts = allPosts.sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+
+const allTags = [...new Set(sortedPosts.flatMap((p) => p.data.tags))].sort();
+
+// Serialize posts for client-side search
+const postData = sortedPosts.map((p) => ({
+  slug: p.slug,
+  title: p.data.title,
+  description: p.data.description,
+  date: p.data.date.toISOString(),
+  tags: p.data.tags,
+  image: p.data.image ?? null,
+  imageAlt: p.data.imageAlt ?? null,
+  readingTime: readingTime(p.body),
+}));
+---
+
+<BaseLayout title="Blog" description="Articles, tutorials, and deep dives on software engineering, AI/ML, and developer tooling.">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
+    <div class="mb-10">
+      <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">Blog</h1>
+      <p class="text-lg text-gray-600 dark:text-gray-300">
+        Tutorials, deep dives, and lessons learned. {sortedPosts.length} posts and counting.
+      </p>
+    </div>
+
+    <!-- Search & filters -->
+    <div class="mb-8 space-y-4">
+      <SearchBar placeholder="Search posts by title, description, or tags…" id="blog-search" />
+      <div class="flex flex-wrap gap-2">
+        <button data-tag="all"
+                class="tag-btn inline-flex items-center px-4 py-1.5 rounded-full text-sm font-medium transition-colors bg-accent-600 text-white">
+          All
+        </button>
+        {allTags.map((tag) => (
+          <button data-tag={tag}
+                  class="tag-btn inline-flex items-center px-4 py-1.5 rounded-full text-sm font-medium transition-colors bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-accent-100 dark:hover:bg-accent-900/40">
+            {tag}
+          </button>
+        ))}
+      </div>
+    </div>
+
+    <!-- Posts grid -->
+    <div id="posts-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {sortedPosts.map((post) => (
+        <div class="post-item"
+             data-title={post.data.title.toLowerCase()}
+             data-description={post.data.description.toLowerCase()}
+             data-tags={JSON.stringify(post.data.tags)}>
+          <BlogCard post={post} />
+        </div>
+      ))}
+    </div>
+
+    <div id="no-results" class="hidden text-center py-20 text-gray-500 dark:text-gray-400">
+      No posts match your search.
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  const searchInput = document.getElementById('blog-search') as HTMLInputElement;
+  const tagButtons = document.querySelectorAll<HTMLButtonElement>('.tag-btn');
+  const postItems = document.querySelectorAll<HTMLDivElement>('.post-item');
+  const noResults = document.getElementById('no-results')!;
+
+  let activeTag = 'all';
+  let searchQuery = '';
+
+  function applyFilters() {
+    let visible = 0;
+    postItems.forEach((item) => {
+      const tags: string[] = JSON.parse(item.dataset.tags ?? '[]');
+      const title = item.dataset.title ?? '';
+      const desc = item.dataset.description ?? '';
+      const query = searchQuery.toLowerCase();
+
+      const matchesTag = activeTag === 'all' || tags.includes(activeTag);
+      const matchesSearch =
+        !query ||
+        title.includes(query) ||
+        desc.includes(query) ||
+        tags.some((t) => t.toLowerCase().includes(query));
+
+      const show = matchesTag && matchesSearch;
+      item.classList.toggle('hidden', !show);
+      if (show) visible++;
+    });
+    noResults.classList.toggle('hidden', visible > 0);
+  }
+
+  searchInput?.addEventListener('input', () => {
+    searchQuery = searchInput.value;
+    applyFilters();
+  });
+
+  tagButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      activeTag = btn.dataset.tag ?? 'all';
+      tagButtons.forEach((b) => {
+        const isActive = b.dataset.tag === activeTag;
+        b.className = isActive
+          ? 'tag-btn inline-flex items-center px-4 py-1.5 rounded-full text-sm font-medium transition-colors bg-accent-600 text-white'
+          : 'tag-btn inline-flex items-center px-4 py-1.5 rounded-full text-sm font-medium transition-colors bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-accent-100 dark:hover:bg-accent-900/40';
+      });
+      applyFilters();
+    });
+  });
+
+  // Support ?tag= query param
+  const urlTag = new URLSearchParams(window.location.search).get('tag');
+  if (urlTag) {
+    activeTag = urlTag;
+    const matchBtn = [...tagButtons].find((b) => b.dataset.tag === urlTag);
+    if (matchBtn) matchBtn.click();
+  }
+</script>
