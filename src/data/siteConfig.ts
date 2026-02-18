@@ -1,10 +1,10 @@
 export const siteConfig = {
-  name: 'Alex Johnson',
-  tagline: 'Senior Software Engineer · Building tools people love',
-  description: 'Personal portfolio and blog of Alex Johnson — software engineer specializing in web, AI, and developer tooling.',
-  url: 'https://yourusername.github.io',
-  github: 'https://github.com/yourusername',
-  linkedin: 'https://linkedin.com/in/yourusername',
-  email: 'alex@example.com',
-  twitterHandle: '@yourusername',
+  name: 'Caleb Hellmund',
+  tagline: 'Computer Engineering Student',
+  description: 'Personal portfolio and blog of Caleb Hellmund — computer engineering student as Liberty University.',
+  url: 'https://CalebHellmund.github.io',
+  github: 'https://github.com/CalebHellmund',
+  linkedin: 'https://www.linkedin.com/in/caleb-hellmund/',
+  email: 'contact@calebhellmund.com',
+  //twitterHandle: '@yourusername',
 };
