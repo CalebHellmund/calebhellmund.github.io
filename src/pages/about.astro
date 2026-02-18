@@ -3,10 +3,9 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import { resumeData } from '@/data/resume';
 
 const timeline = [
-  { year: '2022 – Present', title: 'Senior Software Engineer', org: 'Acme Corp', type: 'work' },
-  { year: '2020 – 2022', title: 'Software Engineer', org: 'Startup XYZ', type: 'work' },
-  { year: '2018 – 2020', title: 'Junior Developer', org: 'Freelance', type: 'work' },
-  { year: '2014 – 2018', title: 'B.S. Computer Science', org: 'State University', type: 'edu' },
+  { year: '2025 – Present', title: 'Officer', org: 'Competive Programming Club', type: 'extracurricular' },
+  { year: '2024 – Present', title: 'Software and Systems Engineer', org: 'Vanguard Engineering Competition Team', type: 'extracurricular' },
+  { year: '2023 – 2027', title: 'B.S. Computer Engineering', org: 'Liberty University', type: 'edu' },
 ];
 ---
 
@@ -26,16 +25,13 @@ const timeline = [
         <div class="space-y-4 text-gray-600 dark:text-gray-300 text-lg leading-relaxed">
           <p>{resumeData.summary}</p>
           <p>
-            When I'm not writing code, you'll find me hiking, tinkering with hardware projects,
-            or contributing to open-source. I believe great software is built at the intersection
-            of strong engineering fundamentals and genuine empathy for the people who use it.
+            Beyond computers, I enjoy hiking, basketball, playing guitar, and just learning random stuff. 
           </p>
           <p>
-            I'm currently based in San Francisco and open to interesting conversations about
-            technology, collaboration, and new opportunities.
+            I'm currently a junior, looking for internships and other opportunities to apply what I have learned.
           </p>
           <div class="pt-2 flex flex-wrap gap-3">
-            <a href="/contact"
+            <a href={`mailto:${resumeData.email}`}
                class="inline-flex items-center gap-2 px-5 py-2.5 bg-accent-600 hover:bg-accent-700 text-white font-medium rounded-lg transition-colors text-sm">
               Get in Touch
             </a>

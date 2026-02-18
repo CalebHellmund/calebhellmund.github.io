@@ -1,6 +1,6 @@
 export const siteConfig = {
   name: 'Caleb Hellmund',
-  tagline: 'Computer Engineering Student',
+  tagline: 'Building solutions to real problems',
   description: 'Personal portfolio and blog of Caleb Hellmund — computer engineering student as Liberty University.',
   url: 'https://CalebHellmund.github.io',
   github: 'https://github.com/CalebHellmund',

@@ -4,7 +4,7 @@ export const resumeData = {
   email: 'contact@calebhellmund.com',
   github: 'https://github.com/CalebHellmund',
   linkedin: 'https://www.linkedin.com/in/caleb-hellmund/',
-  summary: 'Passionate software engineer with 6+ years of experience building scalable web applications, developer tools, and AI-powered systems. I love turning complex problems into elegant, maintainable solutions.',
+  summary: 'Computer engineering student obsessed with solving problems. Whether it\'s a quick script or a full robot operating system, I love building solutions to real problems. I enjoy writing software and building hardware; I am always looking for new things to learn.',
   education: [
     {
       degree: 'B.S. Computer Engineering',

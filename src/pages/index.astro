@@ -5,6 +5,7 @@ import BlogCard from '@/components/BlogCard.astro';
 import { siteConfig } from '@/data/siteConfig';
 import { getFeaturedProjects } from '@/data/projects';
 import { getCollection } from 'astro:content';
+import { resumeData } from '@/data/resume';
 
 const featuredProjects = getFeaturedProjects();
 
@@ -23,7 +24,7 @@ const recentPosts = allPosts
 
     <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="max-w-3xl">
-        <p class="text-accent-600 dark:text-accent-400 font-medium mb-4 text-sm tracking-wide uppercase">Welcome to my corner of the internet</p>
+        <p class="text-accent-600 dark:text-accent-400 font-medium mb-4 text-sm tracking-wide uppercase">Computer Engineering Student</p>
         <h1 class="text-5xl md:text-6xl font-bold text-gray-900 dark:text-white leading-tight mb-6">
           Hi, I'm <span class="text-accent-600 dark:text-accent-400">{siteConfig.name}</span>
         </h1>
@@ -46,7 +47,7 @@ const recentPosts = allPosts
              class="inline-flex items-center gap-2 px-6 py-3 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200 font-medium rounded-lg border border-gray-200 dark:border-gray-700 transition-colors duration-200">
             Resume
           </a>
-          <a href="/contact"
+          <a href={`mailto:${resumeData.email}`}
              class="inline-flex items-center gap-2 px-6 py-3 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200 font-medium rounded-lg border border-gray-200 dark:border-gray-700 transition-colors duration-200">
             Contact
           </a>
