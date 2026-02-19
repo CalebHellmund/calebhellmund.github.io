@@ -3,7 +3,7 @@ import tailwind from '@astrojs/tailwind';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 
-const BASE_PATH = '/calebhellmund';
+const BASE_PATH = '/';
 
 export default defineConfig({
   site: 'https://CalebHellmund.github.io',
