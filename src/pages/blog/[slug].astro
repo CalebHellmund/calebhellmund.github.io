@@ -32,7 +32,7 @@ const relatedProjectList = relatedProjectSlugs
 <BaseLayout title={title} description={description} image={image}>
   <article class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
     <!-- Back link -->
-    <a href="/blog" class="inline-flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-accent-600 dark:hover:text-accent-400 transition-colors mb-10">
+    <a href="/blog/" class="inline-flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-accent-600 dark:hover:text-accent-400 transition-colors mb-10">
       <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
       </svg>
@@ -78,7 +78,7 @@ const relatedProjectList = relatedProjectSlugs
         <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Related Projects</h2>
         <div class="space-y-3">
           {relatedProjectList.map((project) => project && (
-            <a href={`/projects/${project.slug}`}
+            <a href={`/projects/${project.slug}/`}
                class="flex items-start gap-4 p-3 bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-accent-400 dark:hover:border-accent-600 transition-colors">
               <div>
                 <p class="font-medium text-gray-900 dark:text-white text-sm">{project.title}</p>
@@ -96,7 +96,7 @@ const relatedProjectList = relatedProjectSlugs
     <!-- Prev / Next navigation -->
     <nav class="mt-16 pt-8 border-t border-gray-200 dark:border-gray-800 grid grid-cols-2 gap-6">
       {prevPost ? (
-        <a href={`/blog/${prevPost.slug}`} class="group text-left">
+        <a href={`/blog/${prevPost.slug}/`} class="group text-left">
           <span class="text-xs text-gray-500 dark:text-gray-400 block mb-1">← Previous</span>
           <span class="text-sm font-medium text-gray-700 dark:text-gray-200 group-hover:text-accent-600 dark:group-hover:text-accent-400 transition-colors line-clamp-2">
             {prevPost.data.title}
@@ -105,7 +105,7 @@ const relatedProjectList = relatedProjectSlugs
       ) : <div />}
 
       {nextPost ? (
-        <a href={`/blog/${nextPost.slug}`} class="group text-right col-start-2">
+        <a href={`/blog/${nextPost.slug}/`} class="group text-right col-start-2">
           <span class="text-xs text-gray-500 dark:text-gray-400 block mb-1">Next →</span>
           <span class="text-sm font-medium text-gray-700 dark:text-gray-200 group-hover:text-accent-600 dark:group-hover:text-accent-400 transition-colors line-clamp-2">
             {nextPost.data.title}

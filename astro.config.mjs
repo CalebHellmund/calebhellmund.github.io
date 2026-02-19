@@ -8,6 +8,7 @@ const BASE_PATH = '/';
 export default defineConfig({
   site: 'https://CalebHellmund.github.io',
   base: BASE_PATH,
+  trailingSlash: 'always',
   integrations: [
     tailwind(),
     mdx(),
