@@ -11,7 +11,7 @@ import { siteConfig } from '@/data/siteConfig';
         <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-2">Resume</h1>
         <p class="text-gray-500 dark:text-gray-400">Last updated 2026</p>
       </div>
-      <a href="./calebhellmundresume.pdf"
+      <a href={`${import.meta.env.BASE_URL}calebhellmundresume.pdf`}
          download
          class="inline-flex items-center gap-2 px-6 py-3 bg-accent-600 hover:bg-accent-700 text-white font-medium rounded-lg transition-colors shadow-sm hover:shadow-md text-sm">
         <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">

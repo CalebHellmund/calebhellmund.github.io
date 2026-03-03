@@ -6,5 +6,6 @@ export const siteConfig = {
   github: 'https://github.com/CalebHellmund',
   linkedin: 'https://www.linkedin.com/in/caleb-hellmund/',
   email: 'contact@calebhellmund.com',
+  picture: '/images/pfp.jpg',
   //twitterHandle: '@yourusername',
 };
