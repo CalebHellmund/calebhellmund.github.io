@@ -68,6 +68,18 @@ export const projects: Project[] = [
     githubUrl: 'https://github.com/CalebHellmund/ClipboardManager',
     featured: true,
   },
+  {
+    slug: 'nextcloud-server',
+    title: 'Nextcloud Server',
+    description: 'Self-hosted cloud storage for personal use',
+    longDescription: `This project involved designing and deploying a self-hosted cloud storage system using Nextcloud on repurposed hardware to provide secure file and photo backups accessible from both the local network and the internet. I built the system on an old HP desktop running Ubuntu Server and used Docker to simplify deployment of Nextcloud, a MariaDB database, and the Caddy web server. I connected the setup to my public domain name, secured with HTTPS encryption, and configured it to support both local and remote access. Along the way, I had to solve many networking challenges such as DNS management, port forwarding, dynamic IP updates, and secure remote administration.
+    \n\nA major focus of the project was security, reliability, and ease of use. The system was protected using a layered security approach that included FirewallD, restricted port forwarding, encrypted connections, and Twingate for zero-trust remote access instead of exposing SSH directly to the internet. I implemented automated backups using Restic, which create scheduled snapshots of stored files on an external hard drive, providing recovery options in case of accidental deletion or drive failure. Through this project, I created my own self-hosted cloud storage on old hardware, while gaining experience in Linux administration, networking, containerization, and cybersecurity.`,
+    techStack: ['Linux', 'Docker'],
+    tags: ['Linux', 'Networking', 'Homelab', 'Docker'],
+    demoUrl: 'https://cloud.calebhellmund.com/',
+    image: '/images/nextcloud.png',
+    featured: false,
+  },
 ];
 
 export function getProjectBySlug(slug: string): Project | undefined {
